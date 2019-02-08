@@ -1,29 +1,14 @@
-from django.db import models
-from django.template.defaultfilters import slugify
+from django.conf.urls import url
+from rango import views
 
-class Category(models.Model):
-    max_name_length = 128
-    name = models.CharField(max_length=max_name_length, unique=True)
-    views = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
-    slug = models.SlugField()
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
-    
-    class Meta:
-        verbose_name_plural = 'Categories'
-    
-    def __str__(self): # For Python 2, use __unicode__ too
-        return self.name
-
-class Page(models.Model):
-    max_title_length = 128
-    category = models.ForeignKey(Category)
-    title = models.CharField(max_length=max_title_length)
-    url = models.URLField()
-    views = models.IntegerField(default=0)
-    
-    def __str__(self): # For Python 2, use __unicode__ too
-        return self.title
+urlpatterns = [
+	url(r'^$', views.index, name='index'),
+	url(r'^about/$', views.about, name='about'), 
+	url(r'^add_category/$', views.add_category, name='add_category'),
+	url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.show_category, name='show_category'),
+	url(r'^category/(?P<category_name_slug>[\w\-]+)/add_page/$', views.add_page, name='add_page'),
+	url(r'^register/$',views.register,name='register'), 
+	url(r'^login/$', views.user_login, name='login'),
+	url(r'^restricted/', views.restricted, name='restricted'),
+	url(r'^logout/$', views.user_logout, name='logout'),
+]

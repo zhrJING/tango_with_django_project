@@ -1,4 +1,3 @@
-
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
@@ -10,9 +9,11 @@ About
 <div>
     This tutorial has been put together by {{ author }}
     <p>
-    Long cat says hello.
+    Rango says hello.
     <br/><br/>
     <b>{{ message }}</b>
+    <br/>
+    visits: {{ visits }}<br/>
     </p>
     <!-- Media files example -->
     <img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of long cat"/>
